@@ -1,12 +1,8 @@
-import { gameLoop } from './gameLoop.js';
-
-export let gameFinished = false;
-
-export function finishGame() {
-    gameFinished = true;
-}
+import { gameFinished, gameLoop, buttons } from "./game.js";
 
 if (!gameFinished) {
     console.log("Starting game loop...");
     gameLoop();
 }
+
+buttons();
