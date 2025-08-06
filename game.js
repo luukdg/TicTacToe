@@ -5,6 +5,8 @@ export function endGame() { gameFinished = false; }
 
 // Dom factory
 export const domStatus = () => {
+    let winnerFlag = ""
+
     const statusMessage = document.getElementById("status-message")
 
     function playerOne () {
@@ -17,21 +19,29 @@ export const domStatus = () => {
 
     function playerOneWins () {
         statusMessage.textContent = "Player X wins!"
+        winnerFlag = "X"
     }
 
     function playerTwoWins () {
         statusMessage.textContent = "Player O wins!"
+        winnerFlag = "O"
     }
 
     function draw () {
-    statusMessage.textContent = "It's a draw!";
+        statusMessage.textContent = "It's a draw!";
+        winnerFlag = "Draw"
     }
 
     function reset () {
         statusMessage.textContent = "Player X's turn";
+        winnerFlag = ""
     }
 
-    return { playerOne, playerTwo, playerOneWins, playerTwoWins, draw, reset }
+    function getWinnerFlag() {
+        return winnerFlag;
+    }
+
+    return { playerOne, playerTwo, playerOneWins, playerTwoWins, draw, reset, getWinnerFlag }
 }
 
 // create domStatus instance (AFTER defining factory)
@@ -39,6 +49,7 @@ const status = domStatus();
 
 // game logic
 export const game = (function () {
+
     // gameBoard
     let board = ["", "", "", "", "", "", "", "", ""];
     //           0.  1.  2.  3.  4.  5.  6.  7.  8.
@@ -81,7 +92,12 @@ export const game = (function () {
             }
     }
 
+    // Reset player order
     let playerOrder = 1;
+
+    const resetPlayerOrder = () => {
+        playerOrder = 1;
+    }
 
     // Function for eventlistener
     const gameInput = (id, index) => {
@@ -99,7 +115,7 @@ export const game = (function () {
             console.log(board);
             checkScore();
 
-            if (!gameFinished) {           // ✅ Only change if game not over
+            if (!gameFinished) {
                 status.playerTwo();
                 playerOrder = 2;
             }
@@ -110,7 +126,7 @@ export const game = (function () {
             console.log(board);
             checkScore();
 
-            if (!gameFinished) {           // ✅ Same here
+            if (!gameFinished) {
                 status.playerOne();
                 playerOrder = 1;
             }
@@ -119,7 +135,7 @@ export const game = (function () {
 };
 
 
-    return { getBoard, checkScore, gameInput, resetBoard };
+    return { getBoard, checkScore, gameInput, resetBoard, resetPlayerOrder, board };
 })();
 
 // gameLoop
@@ -154,9 +170,18 @@ export const gameLoop = () => {
 };
 
 export const buttons = () => {
+    let X = 0;
+    let O = 0;
+    let draw = 0;
+
     const playField = document.querySelectorAll("#id-1, #id-2, #id-3, #id-4, #id-5, #id-6, #id-7, #id-8, #id-9");
     const resetButton = document.getElementById("reset");
+    const nextButton = document.getElementById("next");
+    const scoreX = document.getElementById("scoreX");
+    const scoreO = document.getElementById("scoreO");
+    const scoreDraw = document.getElementById("scoreDraw");
 
+    // Reset game button
     resetButton.addEventListener("click", () => {
         game.resetBoard();
         playField.forEach(cell => {
@@ -165,5 +190,40 @@ export const buttons = () => {
         endGame();
         status.reset();
         console.log("reset game");
+        game.resetPlayerOrder();
+        scoreX.textContent = "X: 0"
+        scoreO.textContent = "O: 0"
+        scoreDraw.textContent = "Draw: O"
+        X = 0;
+        O = 0;
+        draw = 0;
     });
+
+    // Next game button
+    nextButton.addEventListener("click", () => {
+    if (gameFinished) {
+        game.resetBoard();
+        playField.forEach(cell => {
+            cell.textContent = "";
+        });
+
+        const winner = status.getWinnerFlag();
+
+        if (winner === "X") {
+            X += 1;
+            scoreX.textContent = "X: " + X;
+        } else if (winner === "O") {
+            O += 1;
+            scoreO.textContent = "O: " + O;
+        } else if (winner === "Draw") {
+            draw += 1;
+            scoreDraw.textContent = "Draw: " + draw;
+        }
+
+        console.log("next game");
+        game.resetPlayerOrder();
+        endGame();
+    }
+});
+
 };

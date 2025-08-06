@@ -1,7 +1,12 @@
+* {
+    margin: 0px;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 1rem;
 }
 
 .container {
@@ -9,7 +14,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
 }
 
 .players {
@@ -26,10 +30,56 @@
 .buttons {
     display: flex;
     gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.wrapper {
+    margin: 1rem;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid black;
+}
+
+.wrapper > div {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper > div:hover {
+    background-color: lightgray;
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#status-message {
+    margin: 0px;
+    padding: 0px;
+}
+
+.scoreboard {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+}
+
+.scoreboard > p {
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 /* CSS */
-#start,
+#next,
 #reset {
     background-color: #FFFFFF;
     border: 1px solid rgb(209, 213, 219);
@@ -52,37 +102,18 @@
     transition: transform 0.1s ease;
 }
 
-#start:hover,
+#next:hover,
 #reset:hover {
     background-color: rgb(249, 250, 251);
 }
 
-#start:focus,
+#next:focus,
 #reset:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
 }
 
-#start:active,
+#next:active,
 #reset:active {
     transform: scale(0.95);
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid black;
-}
-
-.wrapper > div {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.wrapper > div:hover {
-    background-color: lightgray;
 }
