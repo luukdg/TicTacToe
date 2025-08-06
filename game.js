@@ -11,29 +11,35 @@ export const domStatus = () => {
 
     function playerOne () {
         statusMessage.textContent = "Player X's turn"
+        statusMessage.style.color = "oklch(0.96 0.05 241)"
     }
 
     function playerTwo () {
         statusMessage.textContent = "Player O's turn"
+        statusMessage.style.color = "oklch(0.96 0.05 241)"
     }
 
     function playerOneWins () {
         statusMessage.textContent = "Player X wins!"
+        statusMessage.style.color = "oklch(0.7 0.10 160)"
         winnerFlag = "X"
     }
 
     function playerTwoWins () {
         statusMessage.textContent = "Player O wins!"
+        statusMessage.style.color = "oklch(0.7 0.10 160)"
         winnerFlag = "O"
     }
 
     function draw () {
         statusMessage.textContent = "It's a draw!";
+        statusMessage.style.color = "oklch(0.7 0.05 30)"
         winnerFlag = "Draw"
     }
 
     function reset () {
         statusMessage.textContent = "Player X's turn";
+        statusMessage.style.color = "oklch(0.96 0.05 241)"
         winnerFlag = ""
     }
 
@@ -95,8 +101,12 @@ export const game = (function () {
     // Reset player order
     let playerOrder = 1;
 
-    const resetPlayerOrder = () => {
-        playerOrder = 1;
+    const resetPlayerOrder = (number) => {
+        playerOrder = number;
+    }
+
+    function checkPlayerOrder () {
+        return playerOrder;
     }
 
     // Function for eventlistener
@@ -135,7 +145,7 @@ export const game = (function () {
 };
 
 
-    return { getBoard, checkScore, gameInput, resetBoard, resetPlayerOrder, board };
+    return { getBoard, checkScore, gameInput, resetBoard, resetPlayerOrder, checkPlayerOrder };
 })();
 
 // gameLoop
@@ -190,7 +200,7 @@ export const buttons = () => {
         endGame();
         status.reset();
         console.log("reset game");
-        game.resetPlayerOrder();
+        game.resetPlayerOrder(1);
         scoreX.textContent = "X: 0"
         scoreO.textContent = "O: 0"
         scoreDraw.textContent = "Draw: O"
@@ -212,16 +222,24 @@ export const buttons = () => {
         if (winner === "X") {
             X += 1;
             scoreX.textContent = "X: " + X;
+            game.resetPlayerOrder(2);
+            status.playerTwo();
         } else if (winner === "O") {
             O += 1;
             scoreO.textContent = "O: " + O;
+            game.resetPlayerOrder(1);
+            status.playerOne();
         } else if (winner === "Draw") {
             draw += 1;
             scoreDraw.textContent = "Draw: " + draw;
+            if (game.checkPlayerOrder === 1) {
+                game.resetPlayerOrder(2);
+                status.playerTwo();
+            } else {
+                status.playerOne();
+            }
         }
-
         console.log("next game");
-        game.resetPlayerOrder();
         endGame();
     }
 });
