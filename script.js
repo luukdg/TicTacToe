@@ -1,4 +1,4 @@
-import { gameFinished, gameLoop, buttons } from "./game.js";
+import { gameFinished, gameLoop, buttons } from "./modules/game.js";
 
 if (!gameFinished) {
     console.log("Starting game loop...");
