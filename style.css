@@ -1,25 +1,25 @@
 :root {
     --bg-dark: oklch(0.1 0.025 241);
---bg: oklch(0.15 0.025 241);
---bg-light: oklch(0.2 0.025 241);
---text: oklch(0.96 0.05 241);
---text-muted: oklch(0.76 0.05 241);
---highlight: oklch(0.5 0.05 241);
---border: oklch(0.4 0.05 241);
---border-muted: oklch(0.3 0.05 241);
---primary: oklch(0.76 0.1 241);
---secondary: oklch(0.76 0.1 61);
---danger: oklch(0.7 0.05 30);
---warning: oklch(0.7 0.05 100);
---success: oklch(0.7 0.05 160);
---info: oklch(0.7 0.05 260);
---font: "Manrope", sans-serif;
+    --bg: oklch(0.15 0.025 241);
+    --bg-light: oklch(0.2 0.025 241);
+    --text: oklch(0.96 0.05 241);
+    --text-muted: oklch(0.76 0.05 241);
+    --highlight: oklch(0.5 0.05 241);
+    --border: oklch(0.4 0.05 241);
+    --border-muted: oklch(0.3 0.05 241);
+    --primary: oklch(0.76 0.1 241);
+    --secondary: oklch(0.76 0.1 61);
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+    --font: "Manrope", sans-serif;
 }
 
 * {
-    margin: 0px;
+    margin: 0;
     background-color: var(--bg);
-    font-family: "Manrope", sans-serif;
+    font-family: var(--font);
 }
 
 .header {
@@ -54,9 +54,6 @@ h1, h2, p {
 
 .wrapper {
     margin: 1rem;
-}
-
-.wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border: 1px solid var(--border);
@@ -70,12 +67,11 @@ h1, h2, p {
     align-items: center;
     justify-content: center;
     background-color: var(--bg-light);
-    transition: background-color 0.3s ease;
     color: var(--text);
     font-size: 4rem;
     font-weight: normal;
     cursor: pointer;
-    transition: scale 0.1s ease;
+    transition: background-color 0.3s ease, scale 0.1s ease;
 }
 
 .wrapper > div:hover {
@@ -93,8 +89,8 @@ h1, h2, p {
 }
 
 #status-message {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     font-size: 1.5rem;
     font-weight: 900;
 }
@@ -112,17 +108,9 @@ h1, h2, p {
 }
 
 /* Buttons */
-#next {
-    background-color: var(--text);
-}
-
-#reset {
-    background-color: var(--primary);
-}
-
 #next,
 #reset {
-    border: 0px;
+    border: 0;
     border-radius: 0.5rem;
     box-sizing: border-box;
     font-size: 0.875rem;
@@ -131,14 +119,20 @@ h1, h2, p {
     padding: 0.5rem 1.25rem;
     text-align: center;
     touch-action: manipulation;
-    transition: transform 0.1s ease;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#next {
+    background-color: var(--text);
+}
+
+#reset {
+    background-color: var(--primary);
 }
 
 #next:hover {
     background-color: rgb(249, 250, 251);
 }
-
 
 #reset:hover {
     background-color: var(--secondary);

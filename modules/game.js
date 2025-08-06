@@ -232,11 +232,12 @@ export const buttons = () => {
         } else if (winner === "Draw") {
             draw += 1;
             scoreDraw.textContent = "Draw: " + draw;
-            if (game.checkPlayerOrder === 1) {
+            if (game.checkPlayerOrder() === 2) {
+                game.resetPlayerOrder(1);
+                status.playerOne();
+            } else {
                 game.resetPlayerOrder(2);
                 status.playerTwo();
-            } else {
-                status.playerOne();
             }
         }
         console.log("next game");
